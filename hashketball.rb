@@ -123,7 +123,8 @@ def game_hash
 end
 
 
-# Below method calls in a player name. Iterate over the game_hash to locate the player, and return the player's stats (points) to the requestor.
+# Below method passes in an argument of player name. Iterate over the game_hash to locate the player, and return the player's stats (points) to the requestor.
+
 
 def num_points_scored(player_name)
    game_hash.each do |location, team_data|
@@ -149,7 +150,11 @@ def shoe_size(player_name)
   end
 end
 
+
 def team_colors(team_name)
+  
+  # Iterate down in search of team_colors. if the argument passed in matches the value then return the colors of the team
+  
   game_hash.each do |team, chars|
     game_hash[team].each do |name, chars|
         if team_name == chars
@@ -163,8 +168,14 @@ end
 
 def team_names
   teams = []
+  
+  # iterate down in search of team_names
+  
   game_hash.each do |keys, values|
     values.each do |data_labels, data|
+      
+      # data_labels (key) is equal to the :team_name push the value into the teams array
+      
       if data_labels == :team_name
         teams << data
       end
@@ -175,7 +186,7 @@ end
 
 
 
-
+# This method declares a numbers array to push in a team's players' numbers (jerseys). It iterates down the game_hash to retrieve this info
 def player_numbers(team_name)
   numbers = []
   game_hash.each do |team, chars|
@@ -192,16 +203,23 @@ end
 
 
 def shoe_size(player_name)
+  
   #Goes through hash, then home away, then names, colors, players
+  
   game_hash.each do |location, team_data|
+  
     #Goes through players then a name and its data
+    
     team_data[:players].each do |name, data|
       if name == player_name
+        
         return data[:shoe]
       end
     end
   end
 end
+
+shoe_size("Jeff Adrien")
 
 
 def big_shoe_rebounds
@@ -239,18 +257,47 @@ def big_shoe_rebounds
 end
 
 
+# This method uses the palyers & find_player helper methods to extract player stats
 def player_stats(player_name)
   find_player(player_name)
 end
 
+# Below is used to merge the hashes, and make them more accessible for player_states method to access information
 def players
   game_hash[:home][:players].merge(game_hash[:away][:players])
 end
 
+# This method passes the argument of name to players merged hash. It uses .fetch to grab information
 def find_player(name)
   players.fetch(name)
 end
 
+
+def finding_team
+  # finding the team that totaled the most points
+  
+  points_stored = []
+  
+  
+  game_hash.each do |team, value| 
+
+    value.each do |key, value|
+      
+        
+    
+    if key == :points
+     points_stored << value
+      
+   end
+  end
+end
+    
+    # return the name of the team
+end
+
+finding_team
+
+#print out name of everyone with a size 15 shoe
 
 
 
